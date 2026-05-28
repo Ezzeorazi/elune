@@ -3,8 +3,8 @@ import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getProducts } from "@/lib/data";
 
-export default function Products() {
-  const products = getProducts().filter((p) => p.published);
+export default async function Products() {
+  const products = (await getProducts()).filter((p) => p.published);
 
   return (
     <section id="productos" className="py-24 md:py-36 bg-cream">

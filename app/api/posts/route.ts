@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPosts, savePosts } from "@/lib/data";
+import { getPosts, insertPost } from "@/lib/data";
 import { revalidatePath } from "next/cache";
 import type { Post } from "@/lib/types";
 
 export async function GET() {
-  return NextResponse.json(getPosts());
+  return NextResponse.json(await getPosts());
 }
 
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as Post;
-  const posts = getPosts();
-  posts.unshift(body);
-  savePosts(posts);
+  await insertPost(body);
   revalidatePath("/");
   revalidatePath("/blog");
   return NextResponse.json({ ok: true });

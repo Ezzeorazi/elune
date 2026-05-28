@@ -2,7 +2,7 @@
   {
     "id": "jabones-artesanales",
     "name": "Jabones Artesanales",
-    "description": "Elaborados a mano con ingredientes naturales. Cada jabón es único, pensado para ser usado y para ser regalado.",
+    "description": "Elaborados a mano con ingredientes naturales en Playa del Carmen. Perfectos para regalar, llevar de recuerdo o incluir en welcome bags para bodas en la Riviera Maya.",
     "tag": "Bestseller",
     "image": "/image/jabon-de-flor.webp",
     "href": "/#contacto",
@@ -13,7 +13,7 @@
   {
     "id": "boxes-de-regalo",
     "name": "Boxes de Regalo",
-    "description": "Cajas curadas con amor y detalle. Cada box es una experiencia completa, lista para sorprender en cualquier ocasión especial.",
+    "description": "Cajas curadas con amor y detalle para bodas de destino, baby showers y celebraciones especiales. Cada box es una experiencia completa, lista para sorprender en la Riviera Maya y más allá.",
     "tag": "Más vendido",
     "image": "/image/packaging-elune-abierto-con-jabones-de-flores.webp",
     "href": "/#contacto",
@@ -23,8 +23,8 @@
   },
   {
     "id": "souvenirs-para-eventos",
-    "name": "Souvenirs para Eventos",
-    "description": "El detalle perfecto para bodas, cumpleaños y celebraciones. Personalizados con el nombre o mensaje que elijas.",
+    "name": "Souvenirs para Bodas",
+    "description": "El detalle perfecto para bodas de destino en Playa del Carmen y la Riviera Maya. Welcome bags, recuerdos para invitados y souvenirs personalizados con el nombre y la fecha de los novios.",
     "tag": "Personalizable",
     "image": "/image/jabones-en-bolsas.webp",
     "href": "/#contacto",
@@ -35,7 +35,7 @@
   {
     "id": "detalles-personalizados",
     "name": "Detalles Personalizados",
-    "description": "Creaciones únicas adaptadas a tu historia. El regalo con intención que convierte un momento en recuerdo.",
+    "description": "Creaciones únicas adaptadas a tu historia. El detalle artesanal que convierte una boda, quinceañera o evento en un recuerdo que tus invitados guardarán para siempre.",
     "tag": "Exclusivo",
     "image": "/image/packaging-elune.webp",
     "href": "/#contacto",

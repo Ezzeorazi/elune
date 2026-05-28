@@ -27,7 +27,7 @@ export default function Catalog({ whatsapp }: { whatsapp: string }) {
 
         <ScrollReveal delay={0.2}>
           <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-cream leading-tight mb-6">
-            Descubrí nuestra
+            Descubre nuestra
             <br />
             colección completa
           </h2>
@@ -36,7 +36,7 @@ export default function Catalog({ whatsapp }: { whatsapp: string }) {
         <ScrollReveal delay={0.3}>
           <p className="font-sans text-cream/60 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-12">
             Todos nuestros productos, variantes, precios y opciones de
-            personalización. Descargalo o pedinos que te lo enviemos por
+            personalización. Descárgalo o pídenos que te lo enviemos por
             WhatsApp.
           </p>
         </ScrollReveal>
@@ -72,7 +72,7 @@ export default function Catalog({ whatsapp }: { whatsapp: string }) {
               { value: "✦", label: "" },
               { value: "Personalizable", label: "En cada detalle" },
               { value: "✦", label: "" },
-              { value: "Envíos", label: "A todo el país" },
+              { value: "Envíos", label: "Riviera Maya · México" },
             ].map((item, i) =>
               item.value === "✦" ? (
                 <span key={i} className="text-soft-gold/40 hidden sm:block">

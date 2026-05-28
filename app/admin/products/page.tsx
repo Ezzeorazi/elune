@@ -6,8 +6,8 @@ import { Plus, Pencil } from "lucide-react";
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
 
-export default function AdminProductsPage() {
-  const products = getProducts();
+export default async function AdminProductsPage() {
+  const products = await getProducts();
 
   return (
     <div className="p-8">

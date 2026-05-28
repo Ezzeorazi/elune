@@ -73,8 +73,8 @@ const footerLinks = [
   },
 ];
 
-export default function Footer() {
-  const settings = getSettings();
+export default async function Footer() {
+  const settings = await getSettings();
 
   return (
     <footer className="bg-dark text-cream/80">
@@ -90,8 +90,7 @@ export default function Footer() {
             />
           </div>
           <p className="font-sans text-sm leading-relaxed text-cream/60 max-w-xs mb-6">
-            El arte de regalar con intención. Jabones artesanales, boxes de
-            regalo y souvenirs para momentos especiales.
+            El arte de regalar con intención. Jabones artesanales, souvenirs y welcome bags para bodas en Playa del Carmen y la Riviera Maya.
           </p>
 
           {/* Social links — only shown if configured */}

@@ -2,10 +2,12 @@ import Link from "next/link";
 import { getProducts, getPosts, getSettings } from "@/lib/data";
 import { Package, FileText, ArrowRight, Settings } from "lucide-react";
 
-export default function AdminDashboard() {
-  const products = getProducts();
-  const posts = getPosts();
-  const settings = getSettings();
+export default async function AdminDashboard() {
+  const [products, posts, settings] = await Promise.all([
+    getProducts(),
+    getPosts(),
+    getSettings(),
+  ]);
 
   return (
     <div className="p-8 max-w-3xl">

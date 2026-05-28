@@ -77,8 +77,8 @@ export default function Contact({
 
             <ScrollReveal delay={0.15}>
               <p className="font-sans text-taupe leading-relaxed">
-                ¿Tenés una celebración especial? ¿Querés personalizar un
-                regalo? Escribinos y con gusto armamos algo único para vos.
+                ¿Tienes una celebración especial? ¿Quieres personalizar un
+                regalo? Escríbenos y con gusto armamos algo único para ti.
               </p>
             </ScrollReveal>
 
@@ -136,7 +136,7 @@ export default function Contact({
             <ScrollReveal delay={0.3}>
               <blockquote className="border-l-2 border-soft-gold pl-5 mt-6">
                 <p className="font-serif text-lg italic text-taupe leading-relaxed">
-                  &ldquo;Cada pedido es una historia. Contanos la tuya.&rdquo;
+                  &ldquo;Cada pedido es una historia. Cuéntanos la tuya.&rdquo;
                 </p>
               </blockquote>
             </ScrollReveal>
@@ -199,7 +199,7 @@ export default function Contact({
                   onChange={handleChange}
                   className="border border-warm-beige bg-cream px-4 py-3 font-sans text-sm text-dark focus:outline-none focus:border-soft-gold transition-colors duration-300 appearance-none"
                 >
-                  <option value="">Seleccioná una opción</option>
+                  <option value="">Selecciona una opción</option>
                   <option value="jabones">Jabones artesanales</option>
                   <option value="box">Box de regalo</option>
                   <option value="souvenirs">Souvenirs para evento</option>
@@ -223,7 +223,7 @@ export default function Contact({
                   value={formData.message}
                   onChange={handleChange}
                   className="border border-warm-beige bg-cream px-4 py-3 font-sans text-sm text-dark placeholder-taupe/40 focus:outline-none focus:border-soft-gold transition-colors duration-300 resize-none"
-                  placeholder="Contanos qué tenés en mente..."
+                  placeholder="Cuéntanos qué tienes en mente..."
                 />
               </div>
 

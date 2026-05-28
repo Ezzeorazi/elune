@@ -7,8 +7,8 @@ import Catalog from "@/components/sections/Catalog";
 import Contact from "@/components/sections/Contact";
 import { getSettings } from "@/lib/data";
 
-export default function Home() {
-  const settings = getSettings();
+export default async function Home() {
+  const settings = await getSettings();
 
   return (
     <>

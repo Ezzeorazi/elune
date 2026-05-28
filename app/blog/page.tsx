@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 
 const categories = ["Todos", "Regalos", "Self-Care", "Bienestar", "Eventos"];
 
-export default function BlogPage() {
-  const posts = getPosts().filter((p) => p.published);
+export default async function BlogPage() {
+  const posts = (await getPosts()).filter((p) => p.published);
 
   return (
     <div className="min-h-screen bg-cream pt-28 pb-24">

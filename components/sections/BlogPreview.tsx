@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getPosts } from "@/lib/data";
 
-export default function BlogPreview() {
-  const posts = getPosts()
+export default async function BlogPreview() {
+  const posts = (await getPosts())
     .filter((p) => p.published)
     .slice(0, 3);
 

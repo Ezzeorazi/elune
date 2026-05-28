@@ -21,8 +21,8 @@ function parseDate(str: string): Date {
   return new Date();
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getPosts().filter((p) => p.published);
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = (await getPosts()).filter((p) => p.published);
 
   return [
     {

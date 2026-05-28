@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { getPosts, getPost } from "@/lib/data";
 
 export async function generateStaticParams() {
-  return getPosts()
+  return (await getPosts())
     .filter((p) => p.published)
     .map((p) => ({ slug: p.slug }));
 }
@@ -19,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) return {};
   const description = post.excerpt || post.content.slice(0, 160);
   return {
@@ -32,7 +32,7 @@ export async function generateMetadata({
       type: "article",
       url: `/blog/${slug}`,
       siteName: "ELUNÈ",
-      locale: "es_AR",
+      locale: "es_MX",
       ...(post.image && {
         images: [{ url: post.image, alt: post.title }],
       }),
@@ -106,7 +106,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
 
   if (!post || !post.published) notFound();
 
