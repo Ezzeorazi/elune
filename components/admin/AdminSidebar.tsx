@@ -1,0 +1,77 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LayoutDashboard, Package, FileText, Settings } from "lucide-react";
+
+const navItems = [
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/products", label: "Productos", icon: Package, exact: false },
+  { href: "/admin/posts", label: "Artículos", icon: FileText, exact: false },
+  { href: "/admin/settings", label: "Configuración", icon: Settings, exact: false },
+];
+
+export default function AdminSidebar() {
+  const pathname = usePathname();
+
+  return (
+    <aside className="w-56 bg-[#2C2825] text-[#F5F1EB] flex flex-col shrink-0 h-full">
+      <div className="p-6 border-b border-white/10">
+        <Link href="/admin" className="flex items-center gap-2.5">
+          <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-6 h-6" />
+          <div>
+            <p
+              className="font-serif text-lg tracking-[0.2em] text-[#F5F1EB]"
+              style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
+            >
+              ELUNÈ
+            </p>
+            <p
+              className="text-[9px] tracking-[0.35em] text-[#F5F1EB]/40 uppercase"
+              style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+            >
+              Admin
+            </p>
+          </div>
+        </Link>
+      </div>
+
+      <nav className="flex-1 p-3 space-y-0.5">
+        {navItems.map((item) => {
+          const isActive = item.exact
+            ? pathname === item.href
+            : pathname.startsWith(item.href) && pathname !== "/admin";
+          const active = item.exact
+            ? pathname === item.href
+            : isActive || (item.href === "/admin" && pathname === "/admin");
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded text-sm transition-colors duration-200 ${
+                (item.exact ? pathname === item.href : pathname.startsWith(item.href))
+                  ? "bg-[#C7AA7A]/20 text-[#C7AA7A]"
+                  : "text-[#F5F1EB]/50 hover:text-[#F5F1EB] hover:bg-white/5"
+              }`}
+              style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+            >
+              <item.icon size={15} strokeWidth={1.5} />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className="p-4 border-t border-white/10">
+        <Link
+          href="/"
+          target="_blank"
+          className="flex items-center gap-1.5 text-xs text-[#F5F1EB]/30 hover:text-[#F5F1EB]/60 transition-colors duration-200"
+          style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+        >
+          Ver sitio ↗
+        </Link>
+      </div>
+    </aside>
+  );
+}

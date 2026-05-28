@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import Lotus from "@/components/icons/Lotus";
 
 export default function Hero() {
   return (
@@ -27,7 +26,7 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <Lotus className="w-16 h-16 md:w-20 md:h-20 text-soft-gold mb-6" />
+          <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-16 h-16 md:w-20 md:h-20 mb-6" />
         </motion.div>
 
         {/* Brand name */}

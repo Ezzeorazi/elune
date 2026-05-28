@@ -6,7 +6,16 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 
 function InstagramIcon({ size = 18 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
@@ -14,7 +23,19 @@ function InstagramIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-export default function Contact() {
+interface ContactProps {
+  instagram: string;
+  instagramUrl: string;
+  whatsapp: string;
+  email: string;
+}
+
+export default function Contact({
+  instagram,
+  instagramUrl,
+  whatsapp,
+  email,
+}: ContactProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,14 +45,15 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder — connect to real form service (Resend, Formspree, etc.)
     setSent(true);
     setFormData({ name: "", email: "", subject: "", message: "" });
     setTimeout(() => setSent(false), 5000);
@@ -55,53 +77,59 @@ export default function Contact() {
 
             <ScrollReveal delay={0.15}>
               <p className="font-sans text-taupe leading-relaxed">
-                ¿Tenés una celebración especial? ¿Querés personalizar un regalo?
-                Escribinos y con gusto armamos algo único para vos.
+                ¿Tenés una celebración especial? ¿Querés personalizar un
+                regalo? Escribinos y con gusto armamos algo único para vos.
               </p>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <div className="flex flex-col gap-5 mt-2">
-                <div>
-                  <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
-                    Instagram
-                  </p>
-                  <a
-                    href="https://instagram.com/madebyelune"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
-                  >
-                    <InstagramIcon size={18} />
-                    @madebyelune
-                  </a>
-                </div>
+                {instagramUrl && (
+                  <div>
+                    <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
+                      Instagram
+                    </p>
+                    <a
+                      href={instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
+                    >
+                      <InstagramIcon size={18} />
+                      {instagram}
+                    </a>
+                  </div>
+                )}
 
-                <div>
-                  <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
-                    WhatsApp
-                  </p>
-                  <a
-                    href="https://wa.me/5491100000000"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
-                  >
-                    Enviar mensaje
-                  </a>
-                </div>
+                {whatsapp && (
+                  <div>
+                    <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
+                      WhatsApp
+                    </p>
+                    <a
+                      href={`https://wa.me/${whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
+                    >
+                      Enviar mensaje
+                    </a>
+                  </div>
+                )}
 
-                <div>
-                  <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
-                    Email
-                  </p>
-                  <a
-                    href="mailto:hola@elune.com"
-                    className="font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
-                  >
-                    hola@elune.com
-                  </a>
-                </div>
+                {email && (
+                  <div>
+                    <p className="font-sans text-xs tracking-[0.3em] text-soft-gold uppercase mb-1">
+                      Email
+                    </p>
+                    <a
+                      href={`mailto:${email}`}
+                      className="font-serif text-xl text-dark hover:text-soft-gold transition-colors duration-300"
+                    >
+                      {email}
+                    </a>
+                  </div>
+                )}
               </div>
             </ScrollReveal>
 

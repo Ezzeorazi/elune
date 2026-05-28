@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { getPosts } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Blog — ELUNÈ",
@@ -8,72 +10,11 @@ export const metadata: Metadata = {
     "Ideas, inspiración y consejos sobre regalos, self-care y momentos especiales. El blog de ELUNÈ.",
 };
 
-const posts = [
-  {
-    slug: "los-mejores-regalos-para-cada-ocasion",
-    category: "Regalos",
-    title: "Los mejores regalos para cada ocasión",
-    excerpt:
-      "Descubrí cómo elegir el regalo perfecto que transmita lo que querés decir, sin importar la ocasión ni el presupuesto.",
-    date: "15 de mayo, 2025",
-    readTime: "4 min",
-    bg: "bg-[#f5ede8]",
-  },
-  {
-    slug: "como-elegir-el-jabon-artesanal-perfecto",
-    category: "Self-Care",
-    title: "Cómo elegir el jabón artesanal perfecto",
-    excerpt:
-      "Fragancia, ingredientes naturales y textura: todo lo que necesitás saber para encontrar tu jabón ideal.",
-    date: "28 de abril, 2025",
-    readTime: "5 min",
-    bg: "bg-[#edf2ee]",
-  },
-  {
-    slug: "el-ritual-de-regalarse-a-una-misma",
-    category: "Bienestar",
-    title: "El ritual de regalarse a una misma",
-    excerpt:
-      "El autocuidado también es un arte. Aprendé a crear rituales simples que transformen tu rutina en algo especial.",
-    date: "10 de abril, 2025",
-    readTime: "3 min",
-    bg: "bg-[#f3f0f7]",
-  },
-  {
-    slug: "souvenirs-que-se-recuerdan",
-    category: "Eventos",
-    title: "Souvenirs que se recuerdan (y los que no)",
-    excerpt:
-      "La diferencia entre un souvenir olvidable y uno que se guarda para siempre está en el detalle. Te contamos el secreto.",
-    date: "22 de marzo, 2025",
-    readTime: "4 min",
-    bg: "bg-[#f0f4ef]",
-  },
-  {
-    slug: "como-armar-una-box-de-regalo-perfecta",
-    category: "Regalos",
-    title: "Cómo armar una box de regalo perfecta",
-    excerpt:
-      "Paso a paso, todos los elementos que hacen que una caja de regalo sea una experiencia completa y memorable.",
-    date: "5 de marzo, 2025",
-    readTime: "6 min",
-    bg: "bg-[#f7f3ed]",
-  },
-  {
-    slug: "ingredientes-naturales-en-jabones",
-    category: "Self-Care",
-    title: "Ingredientes naturales: por qué importan",
-    excerpt:
-      "Lavanda, avena, miel, arcilla: conocé los ingredientes que usamos y por qué marcan la diferencia en tu piel.",
-    date: "18 de febrero, 2025",
-    readTime: "5 min",
-    bg: "bg-[#f0eef5]",
-  },
-];
-
 const categories = ["Todos", "Regalos", "Self-Care", "Bienestar", "Eventos"];
 
 export default function BlogPage() {
+  const posts = getPosts().filter((p) => p.published);
+
   return (
     <div className="min-h-screen bg-cream pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -111,12 +52,30 @@ export default function BlogPage() {
         {/* Posts grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-              {/* Image */}
-              <div className={`${post.bg} aspect-[3/2] mb-5 relative overflow-hidden flex items-center justify-center`}>
-                <span className="font-serif text-4xl text-dark/10 select-none tracking-widest">
-                  ELUNÈ
-                </span>
+            <Link
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="group block"
+            >
+              <div
+                className="aspect-3/2 mb-5 relative overflow-hidden"
+                style={{ background: post.bg }}
+              >
+                {post.image ? (
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="font-serif text-4xl text-dark/10 select-none tracking-widest">
+                      ELUNÈ
+                    </span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/5 transition-colors duration-500" />
                 <div className="absolute top-4 left-4">
                   <span className="font-sans text-[10px] tracking-[0.3em] text-taupe uppercase bg-cream/70 backdrop-blur-sm px-2 py-1">
@@ -125,12 +84,13 @@ export default function BlogPage() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-taupe/50">
                   <span className="font-sans text-xs">{post.date}</span>
                   <span>·</span>
-                  <span className="font-sans text-xs">{post.readTime} de lectura</span>
+                  <span className="font-sans text-xs">
+                    {post.readTime} de lectura
+                  </span>
                 </div>
                 <h2 className="font-serif text-xl text-dark group-hover:text-soft-gold transition-colors duration-300 leading-snug">
                   {post.title}

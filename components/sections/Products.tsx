@@ -1,61 +1,14 @@
-"use client";
-
-import { Sparkles, Gift, Star, Heart } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-
-const products = [
-  {
-    id: 1,
-    name: "Jabones Artesanales",
-    description:
-      "Elaborados a mano con ingredientes naturales. Cada jabón es único, pensado para ser usado y para ser regalado.",
-    bg: "bg-[#f8ede8]",
-    iconBg: "bg-[#f0d4cc]",
-    Icon: Sparkles,
-    href: "/#contacto",
-    tag: "Bestseller",
-  },
-  {
-    id: 2,
-    name: "Boxes de Regalo",
-    description:
-      "Cajas curadas con amor y detalle. Cada box es una experiencia completa, lista para sorprender en cualquier ocasión especial.",
-    bg: "bg-[#edf2ed]",
-    iconBg: "bg-[#d4e4d4]",
-    Icon: Gift,
-    href: "/#contacto",
-    tag: "Más vendido",
-  },
-  {
-    id: 3,
-    name: "Souvenirs para Eventos",
-    description:
-      "El detalle perfecto para bodas, cumpleaños y celebraciones. Personalizados con el nombre o mensaje que elijas.",
-    bg: "bg-[#f5f0e8]",
-    iconBg: "bg-[#e8d9c0]",
-    Icon: Star,
-    href: "/#contacto",
-    tag: "Personalizable",
-  },
-  {
-    id: 4,
-    name: "Detalles Personalizados",
-    description:
-      "Creaciones únicas adaptadas a tu historia. El regalo con intención que convierte un momento en recuerdo.",
-    bg: "bg-[#f0eef5]",
-    iconBg: "bg-[#dbd8ea]",
-    Icon: Heart,
-    href: "/#contacto",
-    tag: "Exclusivo",
-  },
-];
+import { getProducts } from "@/lib/data";
 
 export default function Products() {
+  const products = getProducts().filter((p) => p.published);
+
   return (
     <section id="productos" className="py-24 md:py-36 bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Heading */}
         <ScrollReveal className="text-center mb-16 md:mb-24">
           <span className="font-sans text-xs tracking-[0.4em] text-soft-gold uppercase mb-4 block">
             Nuestras Creaciones
@@ -66,23 +19,30 @@ export default function Products() {
           <div className="w-16 h-px bg-soft-gold mx-auto mt-6" />
         </ScrollReveal>
 
-        {/* Product grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, i) => (
             <ScrollReveal key={product.id} delay={i * 0.1}>
-              <div className={`${product.bg} group relative flex flex-col h-full overflow-hidden`}>
+              <div
+                className="group relative flex flex-col h-full overflow-hidden"
+                style={{ background: product.bg }}
+              >
                 {/* Image area */}
-                <div
-                  className={`${product.iconBg} aspect-[4/5] flex flex-col items-center justify-center gap-4 transition-transform duration-700 group-hover:scale-[1.02]`}
-                >
-                  <product.Icon
-                    size={36}
-                    strokeWidth={1}
-                    className="text-taupe"
-                  />
-                  <span className="font-serif text-xs tracking-[0.3em] text-taupe/60 uppercase">
-                    ELUNÈ
-                  </span>
+                <div className="aspect-4/5 relative overflow-hidden">
+                  {product.image ? (
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="font-serif text-xs tracking-[0.3em] text-taupe/40 uppercase">
+                        ELUNÈ
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Content */}
@@ -108,7 +68,6 @@ export default function Products() {
           ))}
         </div>
 
-        {/* CTA */}
         <ScrollReveal className="text-center mt-16" delay={0.2}>
           <Link
             href="/#catalogo"

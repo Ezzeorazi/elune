@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import Lotus from "@/components/icons/Lotus";
 
 const navLinks = [
   { label: "Inicio", href: "/#inicio" },
@@ -46,11 +45,12 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <Lotus className="w-7 h-7 text-soft-gold transition-transform duration-300 group-hover:scale-110" />
-            <span className="font-serif text-xl tracking-[0.2em] text-dark font-medium">
-              ELUNÈ
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img
+              src="/logo-elune-principal.svg"
+              alt="ELUNÈ"
+              className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop nav */}
@@ -94,7 +94,7 @@ export default function Navbar() {
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <Lotus className="w-14 h-14 text-soft-gold mb-2" />
+        <img src="/logo-elune-circular.svg" alt="ELUNÈ" className="w-20 h-20 mb-2" />
         <ul className="flex flex-col items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.label}>

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "jabones-artesanales",
+    "name": "Jabones Artesanales",
+    "description": "Elaborados a mano con ingredientes naturales. Cada jabón es único, pensado para ser usado y para ser regalado.",
+    "tag": "Bestseller",
+    "image": "/image/jabon-de-flor.webp",
+    "href": "/#contacto",
+    "bg": "#f8ede8",
+    "order": 0,
+    "published": true
+  },
+  {
+    "id": "boxes-de-regalo",
+    "name": "Boxes de Regalo",
+    "description": "Cajas curadas con amor y detalle. Cada box es una experiencia completa, lista para sorprender en cualquier ocasión especial.",
+    "tag": "Más vendido",
+    "image": "/image/packaging-elune-abierto-con-jabones-de-flores.webp",
+    "href": "/#contacto",
+    "bg": "#edf2ed",
+    "order": 1,
+    "published": true
+  },
+  {
+    "id": "souvenirs-para-eventos",
+    "name": "Souvenirs para Eventos",
+    "description": "El detalle perfecto para bodas, cumpleaños y celebraciones. Personalizados con el nombre o mensaje que elijas.",
+    "tag": "Personalizable",
+    "image": "/image/jabones-en-bolsas.webp",
+    "href": "/#contacto",
+    "bg": "#f5f0e8",
+    "order": 2,
+    "published": true
+  },
+  {
+    "id": "detalles-personalizados",
+    "name": "Detalles Personalizados",
+    "description": "Creaciones únicas adaptadas a tu historia. El regalo con intención que convierte un momento en recuerdo.",
+    "tag": "Exclusivo",
+    "image": "/image/packaging-elune.webp",
+    "href": "/#contacto",
+    "bg": "#f0eef5",
+    "order": 3,
+    "published": true
+  }
+]
