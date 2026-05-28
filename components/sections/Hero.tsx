@@ -26,7 +26,7 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-16 h-16 md:w-20 md:h-20 mb-6" />
+          <img src="/isotipo-elune-flor-loto.svg" alt="" className="h-12 md:h-16 w-auto mb-6" />
         </motion.div>
 
         {/* Brand name */}

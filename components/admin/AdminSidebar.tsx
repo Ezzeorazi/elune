@@ -18,7 +18,7 @@ export default function AdminSidebar() {
     <aside className="w-56 bg-[#2C2825] text-[#F5F1EB] flex flex-col shrink-0 h-full">
       <div className="p-6 border-b border-white/10">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-6 h-6" />
+          <img src="/isotipo-elune-flor-loto.svg" alt="" className="h-4 w-auto" />
           <div>
             <p
               className="font-serif text-lg tracking-[0.2em] text-[#F5F1EB]"
@@ -62,7 +62,7 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-white/10 flex flex-col gap-2">
         <Link
           href="/"
           target="_blank"
@@ -71,6 +71,16 @@ export default function AdminSidebar() {
         >
           Ver sitio ↗
         </Link>
+        <button
+          onClick={async () => {
+            await fetch("/api/admin/logout", { method: "POST" });
+            window.location.href = "/admin/login";
+          }}
+          className="flex items-center gap-1.5 text-xs text-[#F5F1EB]/30 hover:text-red-400 transition-colors duration-200 text-left"
+          style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+        >
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );

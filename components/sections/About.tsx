@@ -24,7 +24,7 @@ export default function About() {
               <div className="absolute inset-10 border border-soft-gold/30 pointer-events-none" />
 
               {/* Center content */}
-              <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-24 h-24 md:w-32 md:h-32" />
+              <img src="/isotipo-elune-flor-loto.svg" alt="" className="h-16 md:h-24 w-auto" />
               <div className="text-center px-8">
                 <p className="font-serif text-2xl md:text-3xl text-dark italic leading-relaxed">
                   &ldquo;El arte de regalar<br />con intención&rdquo;

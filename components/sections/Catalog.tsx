@@ -16,7 +16,7 @@ export default function Catalog({ whatsapp }: { whatsapp: string }) {
 
       <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10">
         <ScrollReveal>
-          <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-12 h-12 mx-auto mb-8" />
+          <img src="/isotipo-elune-flor-loto.svg" alt="" className="h-10 w-auto mx-auto mb-8" />
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>

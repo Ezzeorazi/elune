@@ -81,11 +81,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Brand */}
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2 mb-4">
-            <img src="/isotipo-elune-flor-loto.svg" alt="" className="w-8 h-8" />
-            <span className="font-serif text-2xl tracking-[0.2em] text-cream font-medium">
-              ELUNÈ
-            </span>
+          <div className="mb-5">
+            <img
+              src="/logo-elune-principal.svg"
+              alt="ELUNÈ"
+              className="h-12 w-auto"
+              style={{ filter: "brightness(0) invert(1)", opacity: 0.9 }}
+            />
           </div>
           <p className="font-sans text-sm leading-relaxed text-cream/60 max-w-xs mb-6">
             El arte de regalar con intención. Jabones artesanales, boxes de
@@ -160,6 +162,14 @@ export default function Footer() {
           <p className="font-sans text-xs text-cream/30 tracking-widest italic">
             El arte de regalar con intención
           </p>
+          <a
+            href="https://ezequiel-orazi.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-xs text-cream/20 hover:text-cream/50 transition-colors duration-300 tracking-wide"
+          >
+            Desarrollado por Ezequiel Orazi
+          </a>
         </div>
       </div>
     </footer>
