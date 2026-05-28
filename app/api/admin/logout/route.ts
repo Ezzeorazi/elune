@@ -1,9 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST() {
-  const response = NextResponse.redirect(
-    new URL("/admin/login", process.env.NEXT_PUBLIC_URL ?? "http://localhost:3000")
-  );
+export async function POST(request: NextRequest) {
+  const response = NextResponse.redirect(new URL("/admin/login", request.url));
   response.cookies.delete("elune_admin");
   return response;
 }

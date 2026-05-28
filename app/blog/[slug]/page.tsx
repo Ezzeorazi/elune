@@ -11,6 +11,8 @@ export async function generateStaticParams() {
     .map((p) => ({ slug: p.slug }));
 }
 
+const BASE_URL = "https://madebyelune.com";
+
 export async function generateMetadata({
   params,
 }: {
@@ -19,9 +21,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
+  const description = post.excerpt || post.content.slice(0, 160);
   return {
-    title: `${post.title} — Blog ELUNÈ`,
-    description: post.excerpt || post.content.slice(0, 160),
+    title: `${post.title} — Blog`,
+    description,
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      title: post.title,
+      description,
+      type: "article",
+      url: `/blog/${slug}`,
+      siteName: "ELUNÈ",
+      locale: "es_AR",
+      ...(post.image && {
+        images: [{ url: post.image, alt: post.title }],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description,
+      ...(post.image && { images: [post.image] }),
+    },
   };
 }
 
@@ -89,7 +110,37 @@ export default async function BlogPostPage({
 
   if (!post || !post.published) notFound();
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt || post.content.slice(0, 160),
+    author: {
+      "@type": "Organization",
+      name: "ELUNÈ",
+      url: BASE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ELUNÈ",
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/logo-elune-principal.svg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${BASE_URL}/blog/${post.slug}`,
+    },
+    ...(post.image && { image: `${BASE_URL}${post.image}` }),
+  };
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
     <div className="min-h-screen bg-cream pt-28 pb-24">
       <article className="max-w-3xl mx-auto px-6 lg:px-0">
         <Link
@@ -156,5 +207,6 @@ export default async function BlogPostPage({
         </div>
       </article>
     </div>
+    </>
   );
 }
