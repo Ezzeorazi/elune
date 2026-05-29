@@ -13,7 +13,7 @@ const lc =
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 
-const CATEGORIES = ["Regalos", "Self-Care", "Bienestar", "Eventos"];
+const CATEGORIES = ["Bodas", "Regalos", "Self-Care", "Bienestar", "Eventos"];
 
 export default function EditPostPage() {
   const params = useParams();
@@ -25,11 +25,30 @@ export default function EditPostPage() {
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  const [notFound, setNotFound] = useState(false);
+
   useEffect(() => {
-    fetch(`/api/posts/${slug}`)
-      .then((r) => r.json())
-      .then(setForm);
+    fetch(`/api/posts/${slug}`).then((r) => {
+      if (!r.ok) { setNotFound(true); return; }
+      r.json().then(setForm);
+    });
   }, [slug]);
+
+  if (notFound)
+    return (
+      <div className="p-8" style={sans}>
+        <p className="text-sm text-red-400 mb-4">Artículo no encontrado.</p>
+        <button
+          onClick={async () => {
+            await fetch(`/api/posts/${slug}`, { method: "DELETE" });
+            router.push("/admin/posts");
+          }}
+          className="text-xs text-red-500 underline"
+        >
+          Eliminar registro huérfano
+        </button>
+      </div>
+    );
 
   if (!form)
     return (

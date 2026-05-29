@@ -12,7 +12,7 @@ const lc =
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 
-const CATEGORIES = ["Regalos", "Self-Care", "Bienestar", "Eventos"];
+const CATEGORIES = ["Bodas", "Regalos", "Self-Care", "Bienestar", "Eventos"];
 
 function toSlug(s: string) {
   return s
