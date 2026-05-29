@@ -14,7 +14,7 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-24 w-80 h-80 rounded-full bg-warm-beige/40 blur-3xl" />
         <div className="absolute bottom-1/4 -right-24 w-96 h-96 rounded-full bg-sage/20 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-warm-beige/50" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-125 sm:h-125 md:w-175 md:h-175 rounded-full border border-warm-beige/50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-soft-gold/20" />
       </div>
 
