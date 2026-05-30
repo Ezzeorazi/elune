@@ -34,3 +34,13 @@ export interface Post {
   content: string;
   published: boolean;
 }
+
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  read: boolean;
+  created_at: string;
+}

@@ -52,11 +52,24 @@ export default function Contact({
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSent(false), 5000);
+    setError(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error();
+      setSent(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setSent(false), 5000);
+    } catch {
+      setError(true);
+    }
   };
 
   return (
@@ -238,6 +251,11 @@ export default function Contact({
               {sent && (
                 <p className="font-sans text-sm text-sage tracking-wide">
                   ¡Mensaje enviado! Te respondemos a la brevedad.
+                </p>
+              )}
+              {error && (
+                <p className="font-sans text-sm text-red-500 tracking-wide">
+                  Hubo un error al enviar. Por favor intentá de nuevo.
                 </p>
               )}
             </form>

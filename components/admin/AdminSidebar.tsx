@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, FileText, Settings } from "lucide-react";
+import { LayoutDashboard, Package, FileText, Settings, MessageSquare } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/products", label: "Productos", icon: Package, exact: false },
   { href: "/admin/posts", label: "Artículos", icon: FileText, exact: false },
+  { href: "/admin/contacts", label: "Mensajes", icon: MessageSquare, exact: false },
   { href: "/admin/settings", label: "Configuración", icon: Settings, exact: false },
 ];
 

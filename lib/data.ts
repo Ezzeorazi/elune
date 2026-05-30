@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { Settings, Product, Post } from "./types";
+import type { Settings, Product, Post, Contact } from "./types";
 
 // ─── Settings ────────────────────────────────────────────────────────────────
 
@@ -140,4 +140,30 @@ export async function updatePost(slug: string, p: Post): Promise<void> {
 export async function deletePost(slug: string): Promise<void> {
   const { error } = await supabase.from("posts").delete().eq("slug", slug);
   if (error) throw new Error(`deletePost: ${error.message}`);
+}
+
+// ─── Contacts ─────────────────────────────────────────────────────────────────
+
+export async function getContacts(): Promise<Contact[]> {
+  const { data, error } = await supabase
+    .from("contacts")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(`getContacts: ${error.message}`);
+  return data as Contact[];
+}
+
+export async function insertContact(c: Omit<Contact, "id" | "read" | "created_at">): Promise<void> {
+  const { error } = await supabase.from("contacts").insert(c);
+  if (error) throw new Error(`insertContact: ${error.message}`);
+}
+
+export async function markContactRead(id: string): Promise<void> {
+  const { error } = await supabase.from("contacts").update({ read: true }).eq("id", id);
+  if (error) throw new Error(`markContactRead: ${error.message}`);
+}
+
+export async function deleteContact(id: string): Promise<void> {
+  const { error } = await supabase.from("contacts").delete().eq("id", id);
+  if (error) throw new Error(`deleteContact: ${error.message}`);
 }

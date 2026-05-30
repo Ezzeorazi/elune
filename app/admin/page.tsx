@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { getProducts, getPosts, getSettings } from "@/lib/data";
-import { Package, FileText, ArrowRight, Settings } from "lucide-react";
+import { getProducts, getPosts, getSettings, getContacts } from "@/lib/data";
+import { Package, FileText, ArrowRight, Settings, MessageSquare } from "lucide-react";
 
 export default async function AdminDashboard() {
-  const [products, posts, settings] = await Promise.all([
+  const [products, posts, settings, contacts] = await Promise.all([
     getProducts(),
     getPosts(),
     getSettings(),
+    getContacts(),
   ]);
 
   return (
@@ -27,7 +28,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {[
           {
             label: "Productos",
@@ -44,6 +45,14 @@ export default async function AdminDashboard() {
             href: "/admin/posts",
             icon: FileText,
             sub: "publicados",
+          },
+          {
+            label: "Mensajes",
+            value: contacts.filter((c) => !c.read).length,
+            total: contacts.length,
+            href: "/admin/contacts",
+            icon: MessageSquare,
+            sub: "sin leer",
           },
         ].map((card) => (
           <Link
