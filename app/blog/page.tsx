@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Ideas, inspiración y consejos sobre regalos, self-care y momentos especiales. El blog de ELUNÈ.",
 };
 
-const categories = ["Todos", "Regalos", "Self-Care", "Bienestar", "Eventos"];
+const categories = ["Todos", "Bodas", "Regalos", "Self-Care", "Bienestar", "Eventos"];
 
 export default async function BlogPage() {
   const posts = (await getPosts()).filter((p) => p.published);
