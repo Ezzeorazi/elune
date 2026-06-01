@@ -5,12 +5,19 @@ import { getProducts, getPosts, getSettings, getContacts } from "@/lib/data";
 import { Package, FileText, ArrowRight, Settings, MessageSquare } from "lucide-react";
 
 export default async function AdminDashboard() {
-  const [products, posts, settings, contacts] = await Promise.all([
+  const results = await Promise.allSettled([
     getProducts(),
     getPosts(),
     getSettings(),
     getContacts(),
   ]);
+
+  const errors = results.filter((r) => r.status === "rejected").map((r) => (r as PromiseRejectedResult).reason?.message ?? String((r as PromiseRejectedResult).reason));
+
+  const products = results[0].status === "fulfilled" ? results[0].value : [];
+  const posts = results[1].status === "fulfilled" ? results[1].value : [];
+  const settings = results[2].status === "fulfilled" ? results[2].value : null;
+  const contacts = results[3].status === "fulfilled" ? results[3].value : [];
 
   return (
     <div className="p-8 max-w-3xl">
@@ -93,6 +100,12 @@ export default async function AdminDashboard() {
         ))}
       </div>
 
+      {errors.length > 0 && (
+        <div className="mb-4 bg-red-50 border border-red-200 p-4 text-xs font-mono text-red-700 space-y-1">
+          {errors.map((e, i) => <p key={i}>{e}</p>)}
+        </div>
+      )}
+
       {/* Settings preview */}
       <div className="bg-white border border-warm-beige p-6">
         <div className="flex items-center justify-between mb-5">
@@ -113,30 +126,36 @@ export default async function AdminDashboard() {
             Editar →
           </Link>
         </div>
-        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            { label: "Instagram", value: settings.instagram || "—" },
-            { label: "WhatsApp", value: settings.whatsapp || "—" },
-            { label: "Email", value: settings.email || "—" },
-            { label: "Facebook", value: settings.facebook || "No configurado" },
-            { label: "TikTok", value: settings.tiktok || "No configurado" },
-          ].map((item) => (
-            <div key={item.label}>
-              <dt
-                className="text-[10px] tracking-[0.3em] text-taupe/50 uppercase mb-0.5"
-                style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
-              >
-                {item.label}
-              </dt>
-              <dd
-                className="text-sm text-dark"
-                style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
-              >
-                {item.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        {settings ? (
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { label: "Instagram", value: settings.instagram || "—" },
+              { label: "WhatsApp", value: settings.whatsapp || "—" },
+              { label: "Email", value: settings.email || "—" },
+              { label: "Facebook", value: settings.facebook || "No configurado" },
+              { label: "TikTok", value: settings.tiktok || "No configurado" },
+            ].map((item) => (
+              <div key={item.label}>
+                <dt
+                  className="text-[10px] tracking-[0.3em] text-taupe/50 uppercase mb-0.5"
+                  style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+                >
+                  {item.label}
+                </dt>
+                <dd
+                  className="text-sm text-dark"
+                  style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
+                >
+                  {item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ) : (
+          <p className="text-sm text-taupe/50" style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}>
+            No se pudo cargar la configuración.
+          </p>
+        )}
       </div>
     </div>
   );
