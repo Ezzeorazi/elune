@@ -13,7 +13,15 @@ const subjectLabels: Record<string, string> = {
 };
 
 export default async function ContactsPage() {
-  const contacts = await getContacts();
+  let contacts: Awaited<ReturnType<typeof getContacts>> = [];
+  let fetchError: string | null = null;
+
+  try {
+    contacts = await getContacts();
+  } catch (e: unknown) {
+    fetchError = e instanceof Error ? e.message : String(e);
+  }
+
   const unread = contacts.filter((c) => !c.read).length;
 
   async function read(id: string) {
@@ -44,6 +52,12 @@ export default async function ContactsPage() {
           {contacts.length} mensajes · {unread} sin leer
         </p>
       </div>
+
+      {fetchError && (
+        <div className="mb-4 bg-red-50 border border-red-200 p-4 text-xs font-mono text-red-700">
+          {fetchError}
+        </div>
+      )}
 
       {contacts.length === 0 ? (
         <div className="bg-white border border-warm-beige p-12 text-center">
