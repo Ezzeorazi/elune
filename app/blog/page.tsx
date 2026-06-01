@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Blog — ELUNÈ",
   description:
     "Ideas, inspiración y consejos sobre regalos, self-care y momentos especiales. El blog de ELUNÈ.",
+  alternates: { canonical: "/blog" },
 };
 
 const categories = ["Todos", "Bodas", "Regalos", "Self-Care", "Bienestar", "Eventos"];
@@ -27,7 +28,7 @@ export default async function BlogPage() {
             El Blog
           </h1>
           <p className="font-sans text-taupe text-base max-w-md mx-auto leading-relaxed">
-            Inspiración, consejos y todo lo que necesitás para regalar con
+            Inspiración, consejos y todo lo que necesitas para regalar con
             intención.
           </p>
           <div className="w-16 h-px bg-soft-gold mx-auto mt-6" />
