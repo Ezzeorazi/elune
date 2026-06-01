@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getPosts } from "@/lib/data";
 import { Plus, Pencil } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
 

@@ -12,5 +12,6 @@ export async function POST(request: NextRequest) {
   await insertPost(body);
   revalidatePath("/");
   revalidatePath("/blog");
+  revalidatePath("/admin/posts");
   return NextResponse.json({ ok: true });
 }

@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import type { Components } from "react-markdown";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getPosts, getPost } from "@/lib/data";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export async function generateStaticParams() {
   return (await getPosts())
@@ -46,59 +49,54 @@ export async function generateMetadata({
   };
 }
 
-function renderContent(content: string) {
-  const lines = content.split("\n");
-  return lines.map((line, i) => {
-    if (line.startsWith("## ")) {
-      return (
-        <h2 key={i} className="font-serif text-3xl text-dark mt-10 mb-4">
-          {line.replace("## ", "")}
-        </h2>
-      );
-    }
-    if (line.match(/^\*\*(.+?)\*\*:(.*)/)) {
-      const match = line.match(/^\*\*(.+?)\*\*:(.*)/);
-      if (match) {
-        return (
-          <p key={i} className="font-sans text-taupe leading-relaxed mt-2">
-            <strong className="text-dark">{match[1]}:</strong>
-            {match[2]}
-          </p>
-        );
-      }
-    }
-    if (line.startsWith("**") && line.endsWith("**")) {
-      return (
-        <p key={i} className="font-sans font-semibold text-dark mt-4">
-          {line.replace(/\*\*/g, "")}
-        </p>
-      );
-    }
-    if (line.match(/^\d+\.\s/)) {
-      return (
-        <li
-          key={i}
-          className="font-sans text-taupe leading-relaxed ml-4 list-decimal"
-        >
-          {line.replace(/^\d+\.\s/, "")}
-        </li>
-      );
-    }
-    if (line.startsWith("- ")) {
-      return (
-        <li key={i} className="font-sans text-taupe leading-relaxed ml-4 list-disc">
-          {line.replace(/^- /, "")}
-        </li>
-      );
-    }
-    if (line.trim() === "") return <div key={i} className="h-3" />;
-    return (
-      <p key={i} className="font-sans text-taupe leading-relaxed">
-        {line}
-      </p>
-    );
-  });
-}
+const mdComponents: Components = {
+  h1: ({ children }) => (
+    <h1 className="font-serif text-4xl text-dark mt-12 mb-5 leading-tight">{children}</h1>
+  ),
+  h2: ({ children }) => (
+    <h2 className="font-serif text-3xl text-dark mt-10 mb-4">{children}</h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="font-serif text-2xl text-dark mt-8 mb-3">{children}</h3>
+  ),
+  h4: ({ children }) => (
+    <h4 className="font-sans font-semibold text-lg text-dark mt-6 mb-2">{children}</h4>
+  ),
+  p: ({ children }) => (
+    <p className="font-sans text-taupe leading-relaxed mb-4">{children}</p>
+  ),
+  strong: ({ children }) => (
+    <strong className="font-semibold text-dark">{children}</strong>
+  ),
+  em: ({ children }) => (
+    <em className="italic text-taupe">{children}</em>
+  ),
+  ul: ({ children }) => (
+    <ul className="list-disc ml-6 space-y-1.5 mb-4 font-sans text-taupe">{children}</ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal ml-6 space-y-1.5 mb-4 font-sans text-taupe">{children}</ol>
+  ),
+  li: ({ children }) => (
+    <li className="leading-relaxed">{children}</li>
+  ),
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-2 border-soft-gold pl-5 my-6 font-serif text-xl text-taupe/80 italic">
+      {children}
+    </blockquote>
+  ),
+  a: ({ href, children }) => (
+    <a href={href} className="text-soft-gold underline underline-offset-2 hover:text-dark transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  ),
+  hr: () => (
+    <hr className="border-soft-gold/30 my-10" />
+  ),
+  code: ({ children }) => (
+    <code className="font-mono text-sm bg-warm-beige/50 text-dark px-1.5 py-0.5 rounded">{children}</code>
+  ),
+};
 
 export default async function BlogPostPage({
   params,
@@ -191,7 +189,11 @@ export default async function BlogPostPage({
         </h1>
         <div className="w-12 h-px bg-soft-gold mb-10" />
 
-        <div className="flex flex-col gap-3">{renderContent(post.content)}</div>
+        <div className="prose-elune">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+            {post.content}
+          </ReactMarkdown>
+        </div>
 
         {/* Footer CTA */}
         <div className="mt-16 p-8 bg-warm-beige/30 text-center">
