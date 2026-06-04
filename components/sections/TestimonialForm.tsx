@@ -37,12 +37,22 @@ export default function TestimonialForm() {
     try {
       let photoUrl = "";
       if (photoFile) {
-        const fd = new FormData();
-        fd.append("file", photoFile);
-        const res = await fetch("/api/upload", { method: "POST", body: fd });
-        if (!res.ok) throw new Error("No se pudo subir la foto");
-        const data = await res.json();
-        photoUrl = data.url as string;
+        // Get a presigned URL — file goes directly from browser to Supabase (no Vercel size limit)
+        const urlRes = await fetch("/api/upload-url", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: photoFile.name }),
+        });
+        if (!urlRes.ok) throw new Error("No se pudo preparar la subida");
+        const { signedUrl, publicUrl } = await urlRes.json();
+
+        const uploadRes = await fetch(signedUrl, {
+          method: "PUT",
+          headers: { "Content-Type": photoFile.type || "application/octet-stream" },
+          body: photoFile,
+        });
+        if (!uploadRes.ok) throw new Error("No se pudo subir la foto");
+        photoUrl = publicUrl as string;
       }
 
       const res = await fetch("/api/testimonials", {
