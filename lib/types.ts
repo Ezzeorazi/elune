@@ -44,3 +44,13 @@ export interface Contact {
   read: boolean;
   created_at: string;
 }
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  location: string;
+  text: string;
+  photo: string;
+  published: boolean;
+  created_at: string;
+}

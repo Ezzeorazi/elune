@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, FileText, Settings, MessageSquare } from "lucide-react";
+import { LayoutDashboard, Package, FileText, Settings, MessageSquare, Star } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/products", label: "Productos", icon: Package, exact: false },
   { href: "/admin/posts", label: "Artículos", icon: FileText, exact: false },
+  { href: "/admin/testimonials", label: "Testimonios", icon: Star, exact: false },
   { href: "/admin/contacts", label: "Mensajes", icon: MessageSquare, exact: false },
   { href: "/admin/settings", label: "Configuración", icon: Settings, exact: false },
 ];
@@ -16,19 +17,19 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 bg-[#2C2825] text-[#F5F1EB] flex flex-col shrink-0 h-full">
+    <aside className="w-56 bg-dark text-cream flex flex-col shrink-0 h-full">
       <div className="p-6 border-b border-white/10">
         <Link href="/admin" className="flex items-center gap-2.5">
           <img src="/isotipo-elune-flor-loto.svg" alt="" className="h-4 w-auto" />
           <div>
             <p
-              className="font-serif text-lg tracking-[0.2em] text-[#F5F1EB]"
+              className="font-serif text-lg tracking-[0.2em] text-cream"
               style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}
             >
               ELUNÈ
             </p>
             <p
-              className="text-[9px] tracking-[0.35em] text-[#F5F1EB]/40 uppercase"
+              className="text-[9px] tracking-[0.35em] text-cream/40 uppercase"
               style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
             >
               Admin
@@ -39,20 +40,14 @@ export default function AdminSidebar() {
 
       <nav className="flex-1 p-3 space-y-0.5">
         {navItems.map((item) => {
-          const isActive = item.exact
-            ? pathname === item.href
-            : pathname.startsWith(item.href) && pathname !== "/admin";
-          const active = item.exact
-            ? pathname === item.href
-            : isActive || (item.href === "/admin" && pathname === "/admin");
           return (
             <Link
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded text-sm transition-colors duration-200 ${
                 (item.exact ? pathname === item.href : pathname.startsWith(item.href))
-                  ? "bg-[#C7AA7A]/20 text-[#C7AA7A]"
-                  : "text-[#F5F1EB]/50 hover:text-[#F5F1EB] hover:bg-white/5"
+                  ? "bg-soft-gold/20 text-soft-gold"
+                  : "text-cream/50 hover:text-cream hover:bg-white/5"
               }`}
               style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
             >
@@ -67,7 +62,7 @@ export default function AdminSidebar() {
         <Link
           href="/"
           target="_blank"
-          className="flex items-center gap-1.5 text-xs text-[#F5F1EB]/30 hover:text-[#F5F1EB]/60 transition-colors duration-200"
+          className="flex items-center gap-1.5 text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200"
           style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
         >
           Ver sitio ↗
@@ -77,7 +72,7 @@ export default function AdminSidebar() {
             await fetch("/api/admin/logout", { method: "POST" });
             window.location.href = "/admin/login";
           }}
-          className="flex items-center gap-1.5 text-xs text-[#F5F1EB]/30 hover:text-red-400 transition-colors duration-200 text-left"
+          className="flex items-center gap-1.5 text-xs text-cream/30 hover:text-red-400 transition-colors duration-200 text-left"
           style={{ fontFamily: "var(--font-jost), system-ui, sans-serif" }}
         >
           Cerrar sesión

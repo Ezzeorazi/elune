@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { Settings, Product, Post, Contact } from "./types";
+import type { Settings, Product, Post, Contact, Testimonial } from "./types";
 
 // ─── Settings ────────────────────────────────────────────────────────────────
 
@@ -166,4 +166,45 @@ export async function markContactRead(id: string): Promise<void> {
 export async function deleteContact(id: string): Promise<void> {
   const { error } = await supabase.from("contacts").delete().eq("id", id);
   if (error) throw new Error(`deleteContact: ${error.message}`);
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(`getTestimonials: ${error.message}`);
+  return data as Testimonial[];
+}
+
+export async function getPublishedTestimonials(): Promise<Testimonial[]> {
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(`getPublishedTestimonials: ${error.message}`);
+  return data as Testimonial[];
+}
+
+export async function insertTestimonial(
+  t: Omit<Testimonial, "id" | "created_at">
+): Promise<void> {
+  const { error } = await supabase.from("testimonials").insert(t);
+  if (error) throw new Error(`insertTestimonial: ${error.message}`);
+}
+
+export async function updateTestimonial(
+  id: string,
+  updates: Partial<Testimonial>
+): Promise<void> {
+  const { error } = await supabase.from("testimonials").update(updates).eq("id", id);
+  if (error) throw new Error(`updateTestimonial: ${error.message}`);
+}
+
+export async function deleteTestimonial(id: string): Promise<void> {
+  const { error } = await supabase.from("testimonials").delete().eq("id", id);
+  if (error) throw new Error(`deleteTestimonial: ${error.message}`);
 }
