@@ -11,5 +11,6 @@ export async function POST(request: NextRequest) {
   const body = (await request.json()) as Product;
   await insertProduct(body);
   revalidatePath("/");
+  revalidatePath("/admin/products");
   return NextResponse.json({ ok: true });
 }

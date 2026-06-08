@@ -22,6 +22,8 @@ export async function PUT(
   const body = (await request.json()) as Product;
   await updateProduct(id, body);
   revalidatePath("/");
+  revalidatePath("/admin/products");
+  revalidatePath(`/producto/${id}`);
   return NextResponse.json({ ok: true });
 }
 
@@ -32,5 +34,6 @@ export async function DELETE(
   const { id } = await params;
   await deleteProduct(id);
   revalidatePath("/");
+  revalidatePath("/admin/products");
   return NextResponse.json({ ok: true });
 }
