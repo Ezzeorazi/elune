@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Upload } from "lucide-react";
 import type { Product } from "@/lib/types";
 import ProductCustomizationEditor from "@/components/admin/ProductCustomizationEditor";
+import { DEFAULT_PRODUCT_OPTIONS } from "@/lib/defaults";
 
 const ic =
   "w-full border border-warm-beige bg-white px-3 py-2.5 text-sm text-dark focus:outline-none focus:border-soft-gold transition-colors duration-200";
@@ -31,6 +32,7 @@ export default function NuevoProductoPage() {
     bg: "#f5f1eb",
     order: 99,
     published: true,
+    options: DEFAULT_PRODUCT_OPTIONS,
   });
 
   const set = (
