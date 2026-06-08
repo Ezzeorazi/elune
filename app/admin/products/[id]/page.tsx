@@ -5,11 +5,12 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Upload, Trash2 } from "lucide-react";
 import type { Product } from "@/lib/types";
+import ProductCustomizationEditor from "@/components/admin/ProductCustomizationEditor";
 
 const ic =
-  "w-full border border-[#DDD2C4] bg-white px-3 py-2.5 text-sm text-[#2C2825] focus:outline-none focus:border-[#C7AA7A] transition-colors duration-200";
+  "w-full border border-warm-beige bg-white px-3 py-2.5 text-sm text-dark focus:outline-none focus:border-soft-gold transition-colors duration-200";
 const lc =
-  "text-[10px] tracking-[0.25em] text-[#6F6963] uppercase block mb-1.5";
+  "text-[10px] tracking-[0.25em] text-taupe uppercase block mb-1.5";
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 
@@ -31,7 +32,7 @@ export default function EditProductoPage() {
 
   if (!form)
     return (
-      <div className="p-8 text-sm text-[#6F6963]" style={sans}>
+      <div className="p-8 text-sm text-taupe" style={sans}>
         Cargando...
       </div>
     );
@@ -97,13 +98,13 @@ export default function EditProductoPage() {
     <div className="p-8 max-w-xl">
       <Link
         href="/admin/products"
-        className="inline-flex items-center gap-1.5 text-xs text-[#6F6963] hover:text-[#2C2825] transition-colors duration-200 mb-6"
+        className="inline-flex items-center gap-1.5 text-xs text-taupe hover:text-dark transition-colors duration-200 mb-6"
         style={sans}
       >
         <ArrowLeft size={13} /> Volver
       </Link>
       <div className="flex items-center justify-between mb-7">
-        <h1 className="text-3xl text-[#2C2825]" style={serif}>
+        <h1 className="text-3xl text-dark" style={serif}>
           Editar Producto
         </h1>
         <button
@@ -119,164 +120,79 @@ export default function EditProductoPage() {
 
       <form onSubmit={submit} className="space-y-5">
         <div>
-          <label className={lc} style={sans}>
-            ID
-          </label>
-          <input
-            type="text"
-            name="id"
-            value={form.id}
-            onChange={set}
-            required
-            className={ic}
-            style={sans}
-          />
+          <label className={lc} style={sans}>ID</label>
+          <input type="text" name="id" value={form.id} onChange={set} required className={ic} style={sans} />
         </div>
 
         <div>
-          <label className={lc} style={sans}>
-            Nombre
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={set}
-            required
-            className={ic}
-            style={sans}
-          />
+          <label className={lc} style={sans}>Nombre</label>
+          <input type="text" name="name" value={form.name} onChange={set} required className={ic} style={sans} />
         </div>
 
         <div>
-          <label className={lc} style={sans}>
-            Descripción
-          </label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={set}
-            rows={3}
-            className={`${ic} resize-none`}
-            style={sans}
-          />
+          <label className={lc} style={sans}>Descripción</label>
+          <textarea name="description" value={form.description} onChange={set} rows={3} className={`${ic} resize-none`} style={sans} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={lc} style={sans}>
-              Etiqueta
-            </label>
-            <input
-              type="text"
-              name="tag"
-              value={form.tag}
-              onChange={set}
-              className={ic}
-              style={sans}
-            />
+            <label className={lc} style={sans}>Etiqueta</label>
+            <input type="text" name="tag" value={form.tag} onChange={set} className={ic} style={sans} />
           </div>
           <div>
-            <label className={lc} style={sans}>
-              Orden
-            </label>
-            <input
-              type="number"
-              name="order"
-              value={form.order}
-              onChange={set}
-              className={ic}
-              style={sans}
-            />
+            <label className={lc} style={sans}>Orden</label>
+            <input type="number" name="order" value={form.order} onChange={set} className={ic} style={sans} />
           </div>
         </div>
 
         <div>
-          <label className={lc} style={sans}>
-            Imagen
-          </label>
+          <label className={lc} style={sans}>Imagen</label>
           <div className="space-y-2">
             {form.image && (
-              <p className="text-xs text-[#6F6963] truncate" style={sans}>
-                ✓ {form.image}
-              </p>
+              <p className="text-xs text-taupe truncate" style={sans}>✓ {form.image}</p>
             )}
-            <label className="inline-flex items-center gap-2 cursor-pointer border border-[#DDD2C4] bg-white px-3 py-2 text-xs text-[#6F6963] hover:border-[#C7AA7A] transition-colors duration-200">
+            <label className="inline-flex items-center gap-2 cursor-pointer border border-warm-beige bg-white px-3 py-2 text-xs text-taupe hover:border-soft-gold transition-colors duration-200">
               <Upload size={12} />
               {uploading ? "Subiendo..." : "Cambiar imagen"}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={upload}
-                className="hidden"
-              />
+              <input type="file" accept="image/*" onChange={upload} className="hidden" />
             </label>
-            <input
-              type="text"
-              name="image"
-              value={form.image}
-              onChange={set}
-              placeholder="/image/mi-foto.webp"
-              className={ic}
-              style={sans}
-            />
+            <input type="text" name="image" value={form.image} onChange={set} placeholder="/image/mi-foto.webp" className={ic} style={sans} />
           </div>
         </div>
 
         <div>
-          <label className={lc} style={sans}>
-            Color de fondo
-          </label>
+          <label className={lc} style={sans}>Color de fondo</label>
           <div className="flex items-center gap-3">
-            <input
-              type="color"
-              name="bg"
-              value={form.bg}
-              onChange={set}
-              className="w-10 h-10 border border-[#DDD2C4] cursor-pointer rounded-none"
-            />
-            <input
-              type="text"
-              name="bg"
-              value={form.bg}
-              onChange={set}
-              className={`${ic} flex-1`}
-              style={sans}
-            />
+            <input type="color" name="bg" value={form.bg} onChange={set} className="w-10 h-10 border border-warm-beige cursor-pointer rounded-none" />
+            <input type="text" name="bg" value={form.bg} onChange={set} className={`${ic} flex-1`} style={sans} />
           </div>
         </div>
 
         <div>
-          <label className={lc} style={sans}>
-            Enlace
-          </label>
-          <input
-            type="text"
-            name="href"
-            value={form.href}
-            onChange={set}
-            className={ic}
-            style={sans}
-          />
+          <label className={lc} style={sans}>Enlace</label>
+          <input type="text" name="href" value={form.href} onChange={set} className={ic} style={sans} />
+          <p className="text-[11px] text-taupe/60 mt-1" style={sans}>
+            Solo aplica si el producto no tiene opciones de personalización.
+          </p>
         </div>
 
         <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            name="published"
-            checked={form.published}
-            onChange={set}
-            className="w-4 h-4 accent-[#C7AA7A]"
-          />
-          <span className="text-sm text-[#2C2825]" style={sans}>
-            Publicado
-          </span>
+          <input type="checkbox" name="published" checked={form.published} onChange={set} className="w-4 h-4 accent-soft-gold" />
+          <span className="text-sm text-dark" style={sans}>Publicado</span>
         </label>
+
+        <ProductCustomizationEditor
+          price={form.price}
+          includes={form.includes ?? []}
+          options={form.options ?? []}
+          artisanalNote={form.artisanalNote ?? ""}
+          onChange={(fields) => setForm((p) => (p ? { ...p, ...fields } : p))}
+        />
 
         <button
           type="submit"
           disabled={saving}
-          className="bg-[#2C2825] text-[#F5F1EB] text-xs tracking-[0.2em] uppercase px-6 py-3 hover:bg-[#C7AA7A] transition-colors duration-300 disabled:opacity-50"
+          className="bg-dark text-cream text-xs tracking-[0.2em] uppercase px-6 py-3 hover:bg-soft-gold transition-colors duration-300 disabled:opacity-50"
           style={sans}
         >
           {done ? "¡Guardado! Redirigiendo..." : saving ? "Guardando..." : "Guardar cambios"}

@@ -57,10 +57,10 @@ export default async function Products() {
                     {product.description}
                   </p>
                   <Link
-                    href={product.href}
+                    href={product.options?.length ? `/producto/${product.id}` : product.href}
                     className="inline-block mt-2 font-sans text-xs tracking-[0.25em] text-dark uppercase border-b border-dark/30 pb-0.5 hover:border-soft-gold hover:text-soft-gold transition-colors duration-300 self-start"
                   >
-                    Consultar
+                    {product.options?.length ? "Personalizar" : "Consultar"}
                   </Link>
                 </div>
               </div>

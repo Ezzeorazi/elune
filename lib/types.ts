@@ -10,6 +10,21 @@ export interface Settings {
   tiktokUrl: string;
 }
 
+export interface OptionChoice {
+  id: string;
+  label: string;
+  swatch?: string;
+  note?: string;
+}
+
+export interface OptionGroup {
+  id: string;
+  label: string;
+  type: "single-select";
+  required: boolean;
+  choices: OptionChoice[];
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -20,6 +35,10 @@ export interface Product {
   bg: string;
   order: number;
   published: boolean;
+  price?: number;
+  includes?: string[];
+  options?: OptionGroup[];
+  artisanalNote?: string;
 }
 
 export interface Post {

@@ -3,6 +3,7 @@ import type { Settings, Product, Post, Contact, Testimonial } from "./types";
 
 // ─── Settings ────────────────────────────────────────────────────────────────
 
+
 export async function getSettings(): Promise<Settings> {
   const { data, error } = await supabase
     .from("settings")
@@ -40,13 +41,49 @@ export async function saveSettings(s: Settings): Promise<void> {
 
 // ─── Products ─────────────────────────────────────────────────────────────────
 
+function rowToProduct(row: Record<string, unknown>): Product {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    description: row.description as string,
+    tag: row.tag as string,
+    image: row.image as string,
+    href: row.href as string,
+    bg: row.bg as string,
+    order: row.order as number,
+    published: row.published as boolean,
+    price: row.price != null ? (row.price as number) : undefined,
+    includes: row.includes != null ? (row.includes as string[]) : undefined,
+    options: row.options != null ? (row.options as Product["options"]) : undefined,
+    artisanalNote: row.artisanal_note != null ? String(row.artisanal_note) : undefined,
+  };
+}
+
+function productToRow(p: Product) {
+  return {
+    id: p.id,
+    name: p.name,
+    description: p.description,
+    tag: p.tag,
+    image: p.image,
+    href: p.href,
+    bg: p.bg,
+    order: p.order,
+    published: p.published,
+    price: p.price ?? null,
+    includes: p.includes?.length ? p.includes : null,
+    options: p.options?.length ? p.options : null,
+    artisanal_note: p.artisanalNote ?? null,
+  };
+}
+
 export async function getProducts(): Promise<Product[]> {
   const { data, error } = await supabase
     .from("products")
     .select("*")
     .order("order", { ascending: true });
   if (error) throw new Error(`getProducts: ${error.message}`);
-  return data as Product[];
+  return (data as Record<string, unknown>[]).map(rowToProduct);
 }
 
 export async function getProduct(id: string): Promise<Product | undefined> {
@@ -56,16 +93,16 @@ export async function getProduct(id: string): Promise<Product | undefined> {
     .eq("id", id)
     .maybeSingle();
   if (error) throw new Error(`getProduct: ${error.message}`);
-  return data ?? undefined;
+  return data ? rowToProduct(data as Record<string, unknown>) : undefined;
 }
 
 export async function insertProduct(p: Product): Promise<void> {
-  const { error } = await supabase.from("products").insert(p);
+  const { error } = await supabase.from("products").insert(productToRow(p));
   if (error) throw new Error(`insertProduct: ${error.message}`);
 }
 
 export async function updateProduct(id: string, p: Product): Promise<void> {
-  const { error } = await supabase.from("products").update(p).eq("id", id);
+  const { error } = await supabase.from("products").update(productToRow(p)).eq("id", id);
   if (error) throw new Error(`updateProduct: ${error.message}`);
 }
 
