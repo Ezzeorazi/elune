@@ -30,8 +30,32 @@ export default async function ProductoPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-cream">
+      {/* Breadcrumb — sits below the fixed navbar */}
+      <nav
+        aria-label="Migas de pan"
+        className="max-w-7xl mx-auto px-6 lg:px-12 pt-28 md:pt-32"
+      >
+        <ol className="flex items-center gap-2 font-sans text-[11px] tracking-[0.2em] text-taupe/70 uppercase">
+          <li>
+            <Link href="/" className="hover:text-dark transition-colors duration-200">
+              Inicio
+            </Link>
+          </li>
+          <li aria-hidden className="text-taupe/30">/</li>
+          <li>
+            <Link href="/#productos" className="hover:text-dark transition-colors duration-200">
+              Productos
+            </Link>
+          </li>
+          <li aria-hidden className="text-taupe/30">/</li>
+          <li className="text-dark truncate max-w-48" aria-current="page">
+            {product.name}
+          </li>
+        </ol>
+      </nav>
+
       {/* Back link */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-5">
         <Link
           href="/#productos"
           className="inline-flex items-center gap-1.5 font-sans text-xs tracking-[0.25em] text-taupe uppercase hover:text-dark transition-colors duration-200"
@@ -40,7 +64,7 @@ export default async function ProductoPage({ params }: Props) {
         </Link>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
           {/* ── Image ── */}

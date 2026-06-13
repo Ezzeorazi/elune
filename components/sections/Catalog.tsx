@@ -21,7 +21,7 @@ export default function Catalog({ whatsapp }: { whatsapp: string }) {
 
         <ScrollReveal delay={0.1}>
           <span className="font-sans text-xs tracking-[0.4em] text-soft-gold uppercase block mb-4">
-            Catálogo 2025
+            Catálogo Completo
           </span>
         </ScrollReveal>
 

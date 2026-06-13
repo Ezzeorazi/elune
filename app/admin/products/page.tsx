@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getProducts } from "@/lib/data";
 import Image from "next/image";
-import { Plus, Pencil } from "lucide-react";
+import { Plus, Pencil, Table2 } from "lucide-react";
 
 const serif = { fontFamily: "var(--font-cormorant), Georgia, serif" };
 const sans = { fontFamily: "var(--font-jost), system-ui, sans-serif" };
@@ -20,14 +20,24 @@ export default async function AdminProductsPage() {
             {products.length} productos en total
           </p>
         </div>
-        <Link
-          href="/admin/products/nuevo"
-          className="inline-flex items-center gap-2 bg-[#2C2825] text-[#F5F1EB] text-xs tracking-[0.2em] uppercase px-4 py-2.5 hover:bg-[#C7AA7A] transition-colors duration-300"
-          style={sans}
-        >
-          <Plus size={13} />
-          Nuevo
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/products/lote"
+            className="inline-flex items-center gap-2 border border-[#DDD2C4] text-xs tracking-[0.15em] uppercase text-[#6F6963] px-4 py-2.5 hover:border-[#C7AA7A] hover:text-[#C7AA7A] transition-colors duration-200"
+            style={sans}
+          >
+            <Table2 size={13} />
+            Planilla
+          </Link>
+          <Link
+            href="/admin/products/nuevo"
+            className="inline-flex items-center gap-2 bg-[#2C2825] text-[#F5F1EB] text-xs tracking-[0.2em] uppercase px-4 py-2.5 hover:bg-[#C7AA7A] transition-colors duration-300"
+            style={sans}
+          >
+            <Plus size={13} />
+            Nuevo
+          </Link>
+        </div>
       </div>
 
       <div className="space-y-3">

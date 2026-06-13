@@ -106,6 +106,14 @@ export async function updateProduct(id: string, p: Product): Promise<void> {
   if (error) throw new Error(`updateProduct: ${error.message}`);
 }
 
+/** Bulk insert-or-update many products at once (spreadsheet save). */
+export async function upsertProducts(products: Product[]): Promise<void> {
+  if (products.length === 0) return;
+  const rows = products.map(productToRow);
+  const { error } = await supabase.from("products").upsert(rows);
+  if (error) throw new Error(`upsertProducts: ${error.message}`);
+}
+
 export async function deleteProduct(id: string): Promise<void> {
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw new Error(`deleteProduct: ${error.message}`);
