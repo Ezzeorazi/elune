@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!post) return {};
   const description = post.excerpt || post.content.slice(0, 160);
   return {
-    title: `${post.title} — Blog`,
+    title: post.title,
     description,
     alternates: { canonical: `/blog/${slug}` },
     openGraph: {
@@ -133,11 +133,25 @@ export default async function BlogPostPage({
     ...(post.image && { image: `${BASE_URL}${post.image}` }),
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: BASE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${BASE_URL}/blog/${post.slug}` },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
     <div className="min-h-screen bg-cream pt-28 pb-24">
       <article className="max-w-3xl mx-auto px-6 lg:px-0">

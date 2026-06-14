@@ -59,14 +59,14 @@ const footerLinks = [
     heading: "Explorar",
     links: [
       { label: "Inicio", href: "/#inicio" },
-      { label: "Productos", href: "/#productos" },
+      { label: "Productos", href: "/productos" },
       { label: "Catálogo", href: "/#catalogo" },
     ],
   },
   {
     heading: "Nosotros",
     links: [
-      { label: "Quiénes Somos", href: "/#quienes-somos" },
+      { label: "Quiénes Somos", href: "/quienes-somos" },
       { label: "Blog", href: "/blog" },
       { label: "Contacto", href: "/#contacto" },
     ],

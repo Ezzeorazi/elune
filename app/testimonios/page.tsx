@@ -5,9 +5,10 @@ import TestimonialForm from "@/components/sections/TestimonialForm";
 import { getPublishedTestimonials } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Testimonios | ELUNÈ",
+  title: "Testimonios",
   description:
     "Lee lo que dicen nuestras clientas y comparte tu propia experiencia con los jabones artesanales ELUNÈ.",
+  alternates: { canonical: "/testimonios" },
 };
 
 export default async function TestimoniosPage() {

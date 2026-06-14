@@ -3,7 +3,7 @@ import { getPosts } from "@/lib/data";
 import BlogFilter from "@/components/blog/BlogFilter";
 
 export const metadata: Metadata = {
-  title: "Blog — ELUNÈ",
+  title: "Blog",
   description:
     "Ideas, inspiración y consejos sobre regalos, self-care y momentos especiales. El blog de ELUNÈ.",
   alternates: { canonical: "/blog" },

@@ -10,13 +10,34 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+const BASE_URL = "https://madebyelune.com";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = await getProduct(id);
   if (!product) return {};
+  const url = `/producto/${id}`;
   return {
-    title: `${product.name} — ELUNÈ`,
+    title: product.name,
     description: product.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      type: "website",
+      url,
+      siteName: "ELUNÈ",
+      locale: "es_MX",
+      ...(product.image && {
+        images: [{ url: product.image, alt: product.name }],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.description,
+      ...(product.image && { images: [product.image] }),
+    },
   };
 }
 
@@ -28,8 +49,44 @@ export default async function ProductoPage({ params }: Props) {
 
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    ...(product.image && { image: `${BASE_URL}${product.image}` }),
+    brand: { "@type": "Brand", name: "ELUNÈ" },
+    ...(product.price && {
+      offers: {
+        "@type": "Offer",
+        price: product.price,
+        priceCurrency: "MXN",
+        availability: "https://schema.org/InStock",
+        url: `${BASE_URL}/producto/${product.id}`,
+      },
+    }),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: BASE_URL },
+      { "@type": "ListItem", position: 2, name: "Productos", item: `${BASE_URL}/productos` },
+      { "@type": "ListItem", position: 3, name: product.name, item: `${BASE_URL}/producto/${product.id}` },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-cream">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Breadcrumb — sits below the fixed navbar */}
       <nav
         aria-label="Migas de pan"
@@ -43,7 +100,7 @@ export default async function ProductoPage({ params }: Props) {
           </li>
           <li aria-hidden className="text-taupe/30">/</li>
           <li>
-            <Link href="/#productos" className="hover:text-dark transition-colors duration-200">
+            <Link href="/productos" className="hover:text-dark transition-colors duration-200">
               Productos
             </Link>
           </li>
@@ -57,7 +114,7 @@ export default async function ProductoPage({ params }: Props) {
       {/* Back link */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-5">
         <Link
-          href="/#productos"
+          href="/productos"
           className="inline-flex items-center gap-1.5 font-sans text-xs tracking-[0.25em] text-taupe uppercase hover:text-dark transition-colors duration-200"
         >
           <ArrowLeft size={13} /> Volver

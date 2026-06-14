@@ -30,20 +30,6 @@ export const metadata: Metadata = {
   },
   description:
     "Jabones artesanales, souvenirs y welcome bags para bodas de destino en Playa del Carmen y la Riviera Maya. ELUNÈ crea detalles únicos, boxes de regalo y recuerdos personalizados para momentos especiales.",
-  keywords: [
-    "jabones artesanales playa del carmen",
-    "souvenirs para boda riviera maya",
-    "recuerdos para boda playa del carmen",
-    "welcome bags boda riviera maya",
-    "detalles para invitados boda",
-    "cajas de regalo personalizadas playa del carmen",
-    "wedding favors playa del carmen",
-    "jabones artesanales",
-    "boxes de regalo",
-    "souvenirs personalizados",
-    "ELUNÈ",
-    "madebyelune",
-  ],
   alternates: { canonical: "/" },
   openGraph: {
     title: "ELUNÈ — Jabones Artesanales y Souvenirs para Bodas · Playa del Carmen",
@@ -94,7 +80,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": "Organization",
+                  "@type": ["Organization", "LocalBusiness"],
                   "@id": `${BASE_URL}/#organization`,
                   name: "ELUNÈ",
                   url: BASE_URL,
@@ -105,12 +91,21 @@ export default function RootLayout({
                   image: `${BASE_URL}/image/packaging-elune-desde-arriba.webp`,
                   description:
                     "Jabones artesanales, souvenirs y welcome bags para bodas de destino en Playa del Carmen y la Riviera Maya.",
+                  telephone: "+5219995033968",
+                  email: "hola@madebyelune.com",
+                  priceRange: "$$",
                   address: {
                     "@type": "PostalAddress",
                     addressLocality: "Playa del Carmen",
                     addressRegion: "Quintana Roo",
                     addressCountry: "MX",
                   },
+                  areaServed: [
+                    { "@type": "City", name: "Playa del Carmen" },
+                    { "@type": "City", name: "Cancún" },
+                    { "@type": "City", name: "Tulum" },
+                    { "@type": "Place", name: "Riviera Maya" },
+                  ],
                   sameAs: ["https://instagram.com/madebyelune"],
                 },
                 {

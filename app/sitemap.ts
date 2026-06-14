@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getPosts } from "@/lib/data";
+import { getPosts, getProducts } from "@/lib/data";
 
 const BASE_URL = "https://madebyelune.com";
 
@@ -22,7 +22,10 @@ function parseDate(str: string): Date {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = (await getPosts()).filter((p) => p.published);
+  const [posts, products] = await Promise.all([
+    getPosts().then((p) => p.filter((x) => x.published)),
+    getProducts().then((p) => p.filter((x) => x.published)),
+  ]);
 
   return [
     {
@@ -32,11 +35,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
+      url: `${BASE_URL}/productos`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/quienes-somos`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: `${BASE_URL}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/testimonios`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    ...products.map((product) => ({
+      url: `${BASE_URL}/producto/${product.id}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
     ...posts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,
       lastModified: parseDate(post.date),

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const values = [
@@ -89,6 +90,16 @@ export default function About() {
                   sientan.&rdquo;
                 </p>
               </blockquote>
+            </ScrollReveal>
+
+            <ScrollReveal direction="right" delay={0.35}>
+              <Link
+                href="/quienes-somos"
+                className="inline-flex items-center gap-2 font-sans text-sm tracking-[0.25em] uppercase text-dark self-start hover:text-soft-gold transition-colors duration-300 mt-2"
+              >
+                Conoce nuestra historia
+                <span className="text-soft-gold">→</span>
+              </Link>
             </ScrollReveal>
           </div>
         </div>
