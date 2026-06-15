@@ -25,16 +25,16 @@ const BASE_URL = "https://madebyelune.com";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "ELUNÈ — Jabones Artesanales y Souvenirs para Bodas · Playa del Carmen",
+    default: "Souvenirs para Boda en Playa del Carmen | ELUNÈ",
     template: "%s | ELUNÈ",
   },
   description:
-    "Jabones artesanales, souvenirs y welcome bags para bodas de destino en Playa del Carmen y la Riviera Maya. ELUNÈ crea detalles únicos, boxes de regalo y recuerdos personalizados para momentos especiales.",
+    "Souvenirs, welcome bags y jabones artesanales personalizados para bodas y eventos en Playa del Carmen y la Riviera Maya. El arte de regalar con intención.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "ELUNÈ — Jabones Artesanales y Souvenirs para Bodas · Playa del Carmen",
+    title: "Souvenirs para Boda en Playa del Carmen | ELUNÈ",
     description:
-      "Jabones artesanales, souvenirs y welcome bags para bodas en Playa del Carmen y la Riviera Maya. Detalles únicos y regalos personalizados.",
+      "Souvenirs, welcome bags y jabones artesanales personalizados para bodas y eventos en Playa del Carmen y la Riviera Maya. El arte de regalar con intención.",
     url: BASE_URL,
     siteName: "ELUNÈ",
     images: [
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ELUNÈ — Jabones Artesanales y Souvenirs para Bodas · Playa del Carmen",
+    title: "Souvenirs para Boda en Playa del Carmen | ELUNÈ",
     description:
-      "Jabones artesanales, souvenirs y welcome bags para bodas de destino en Playa del Carmen y la Riviera Maya.",
+      "Souvenirs, welcome bags y jabones artesanales personalizados para bodas y eventos en Playa del Carmen y la Riviera Maya. El arte de regalar con intención.",
     images: ["/image/packaging-elune-desde-arriba.webp"],
   },
   robots: {
