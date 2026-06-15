@@ -60,7 +60,7 @@ const footerLinks = [
     links: [
       { label: "Inicio", href: "/#inicio" },
       { label: "Productos", href: "/productos" },
-      { label: "Catálogo", href: "/#catalogo" },
+      { label: "Testimonios", href: "/testimonios" },
     ],
   },
   {
