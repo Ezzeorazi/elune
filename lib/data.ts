@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { Settings, Product, Post, Contact, Testimonial } from "./types";
+import type { Settings, Product, Post, Contact, Testimonial, Presupuesto, PresupuestoItem } from "./types";
 
 // ─── Settings ────────────────────────────────────────────────────────────────
 
@@ -252,4 +252,59 @@ export async function updateTestimonial(
 export async function deleteTestimonial(id: string): Promise<void> {
   const { error } = await supabase.from("testimonials").delete().eq("id", id);
   if (error) throw new Error(`deleteTestimonial: ${error.message}`);
+}
+
+// ─── Presupuestos ─────────────────────────────────────────────────────────────
+
+function rowToPresupuesto(row: Record<string, unknown>): Presupuesto {
+  return {
+    id: row.id as string,
+    numero: row.numero as number,
+    cliente_nombre: row.cliente_nombre as string,
+    cliente_email: (row.cliente_email as string) ?? "",
+    cliente_telefono: (row.cliente_telefono as string) ?? "",
+    items: (row.items as PresupuestoItem[]) ?? [],
+    subtotal: row.subtotal as number,
+    iva_porcentaje: row.iva_porcentaje as number | null,
+    iva_monto: row.iva_monto as number | null,
+    total: row.total as number,
+    notas: (row.notas as string) ?? "",
+    created_at: row.created_at as string,
+  };
+}
+
+export async function getPresupuestos(): Promise<Presupuesto[]> {
+  const { data, error } = await supabase
+    .from("presupuestos")
+    .select("*")
+    .order("numero", { ascending: false });
+  if (error) throw new Error(`getPresupuestos: ${error.message}`);
+  return (data as Record<string, unknown>[]).map(rowToPresupuesto);
+}
+
+export async function getPresupuesto(id: string): Promise<Presupuesto | undefined> {
+  const { data, error } = await supabase
+    .from("presupuestos")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw new Error(`getPresupuesto: ${error.message}`);
+  return data ? rowToPresupuesto(data as Record<string, unknown>) : undefined;
+}
+
+export async function insertPresupuesto(
+  p: Omit<Presupuesto, "id" | "numero" | "created_at">
+): Promise<Presupuesto> {
+  const { data, error } = await supabase
+    .from("presupuestos")
+    .insert(p)
+    .select()
+    .single();
+  if (error) throw new Error(`insertPresupuesto: ${error.message}`);
+  return rowToPresupuesto(data as Record<string, unknown>);
+}
+
+export async function deletePresupuesto(id: string): Promise<void> {
+  const { error } = await supabase.from("presupuestos").delete().eq("id", id);
+  if (error) throw new Error(`deletePresupuesto: ${error.message}`);
 }

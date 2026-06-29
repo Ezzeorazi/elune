@@ -73,3 +73,25 @@ export interface Testimonial {
   published: boolean;
   created_at: string;
 }
+
+export interface PresupuestoItem {
+  descripcion: string;
+  cantidad: number;
+  precio_unitario: number;
+  subtotal: number;
+}
+
+export interface Presupuesto {
+  id: string;
+  numero: number;
+  cliente_nombre: string;
+  cliente_email: string;
+  cliente_telefono: string;
+  items: PresupuestoItem[];
+  subtotal: number;
+  iva_porcentaje: number | null;
+  iva_monto: number | null;
+  total: number;
+  notas: string;
+  created_at: string;
+}
