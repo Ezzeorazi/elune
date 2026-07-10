@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProduct, updateProduct, deleteProduct } from "@/lib/data";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/adminAuth";
 import type { Product } from "@/lib/types";
 
 export async function GET(
@@ -18,6 +19,9 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const { id } = await params;
   const body = (await request.json()) as Product;
   await updateProduct(id, body);
@@ -28,9 +32,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const { id } = await params;
   await deleteProduct(id);
   revalidatePath("/");

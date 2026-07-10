@@ -1,16 +1,13 @@
-﻿import { NextRequest, NextResponse } from "next/server";
-
-const COOKIE = "elune_admin";
+import { NextRequest, NextResponse } from "next/server";
+import { isValidAdminCookie } from "@/lib/adminAuth";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Public admin routes that don't need auth
   if (pathname === "/admin/login") return NextResponse.next();
 
-  const token = request.cookies.get(COOKIE)?.value;
-  const secret = process.env.ADMIN_SECRET ?? "elune2025";
-
-  if (token !== secret) {
+  if (!isValidAdminCookie(request)) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
@@ -20,4 +17,3 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/admin/:path*"],
 };
-

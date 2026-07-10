@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { insertPresupuesto } from "@/lib/data";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function POST(request: NextRequest) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
   try {
     const body = await request.json();
     const presupuesto = await insertPresupuesto(body);

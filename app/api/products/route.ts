@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProducts, insertProduct, upsertProducts } from "@/lib/data";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/adminAuth";
 import type { Product } from "@/lib/types";
 
 export async function GET() {
@@ -8,6 +9,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const body = (await request.json()) as Product;
   await insertProduct(body);
   revalidatePath("/");
@@ -15,8 +19,10 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
-/** Bulk save from the spreadsheet editor. Accepts an array of products. */
 export async function PUT(request: NextRequest) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const body = (await request.json()) as Product[];
   if (!Array.isArray(body)) {
     return NextResponse.json({ error: "Expected an array" }, { status: 400 });

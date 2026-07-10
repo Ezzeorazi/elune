@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPosts, getPost, updatePost, deletePost } from "@/lib/data";
+import { getPost, updatePost, deletePost } from "@/lib/data";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/adminAuth";
 import type { Post } from "@/lib/types";
 
 export async function GET(
@@ -17,6 +18,9 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const { slug } = await params;
   const body = (await request.json()) as Post;
   await updatePost(slug, body);
@@ -27,9 +31,12 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const { slug } = await params;
   await deletePost(slug);
   revalidatePath("/");

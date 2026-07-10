@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function POST(request: NextRequest) {
+  const authErr = requireAdmin(request);
+  if (authErr) return authErr;
+
   const formData = await request.formData();
   const file = formData.get("file") as File;
   if (!file)
